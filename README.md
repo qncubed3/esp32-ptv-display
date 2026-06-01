@@ -7,6 +7,8 @@ The project consists of two main components:
 1. **Backend API** – fetches and simplifies transport data into a compact JSON format suitable for embedded devices.
 2. **ESP32 OLED Display** – connects to Wi-Fi, requests departure data from the API, and displays upcoming departures on a small OLED screen.
 
+![Demo](/display.jpeg)
+
 
 ## System Architecture
 
