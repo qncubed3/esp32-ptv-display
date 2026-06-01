@@ -68,13 +68,7 @@ The API is responsible for:
 * Returning compact JSON suitable for low-power devices
 * Reducing the amount of processing required on the ESP32
 
-See:
-
-```text
-api/README.md
-```
-
-for setup, deployment and API documentation.
+See [here](ptv-api/README.md) for setup, deployment and API documentation.
 
 
 ### ESP32 OLED Display
@@ -93,13 +87,7 @@ The ESP32 firmware is responsible for:
 * Displaying departures on an SSD1306 OLED display
 * Refreshing data periodically
 
-See:
-
-```text
-esp32/README.md
-```
-
-for hardware setup, wiring diagrams, Arduino IDE installation and firmware instructions.
+See [here](esp32-display/README.md) for hardware setup, wiring diagrams, Arduino IDE installation and firmware instructions.
 
 
 ## Data
