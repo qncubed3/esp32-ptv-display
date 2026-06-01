@@ -5,15 +5,15 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define STOP_ID "G1071"         // Flinders Street
-#define PLATFORM "P1"           // Choose your platform
-#define SSID "SSID";            // Wifi SSID here
-#define PASSWORD "PASSWORD";    // Wifi password here
+constexpr const char* STOP_ID = "G1071";      // Flinders Street
+constexpr const char* PLATFORM = "P1";        // Choose your platform
+constexpr const char* SSID = "SSID";          // Wifi SSID here
+constexpr const char* PASSWORD = "PASSWORD";  // Wifi password here
 
-#define LIMIT 4
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define LINE_HEIGHT 12
+constexpr int LIMIT = 4;
+constexpr int SCREEN_WIDTH = 128;
+constexpr int SCREEN_HEIGHT = 64;
+constexpr int LINE_HEIGHT = 12;
 
 Adafruit_SSD1306 oled(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 

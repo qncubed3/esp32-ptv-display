@@ -141,9 +141,10 @@ The OLED displays the station/platform and upcoming departures, for example:
 ```text
 Flinders Platform P1
 
-10:30 Mernda (5m)
-10:40 Hurstbri (18m)
-10:50 Mernda (33m)
+06:46 Mooroolb (5m)
+06:57 Belgrave (17m)
+07:10 Lilydale (30m)
+07:14 Mooroolb (34m)
 ```
 
 Because the display is only 128×64 pixels, long destination names are shortened.
