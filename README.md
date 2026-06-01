@@ -1,135 +1,120 @@
-# Melbourne Train Departures API
+# Melbourne Public Transport Departure Display
 
-A lightweight FastAPI service that provides simplified public transport departure information for Melbourne train stations.
+A complete end-to-end public transport departure display system built using an ESP32 microcontroller, a custom backend API, and real-time Melbourne public transport data.
 
-The API acts as a wrapper around the AnyTrip departures endpoint, extracting only the information needed for downstream applications. In this project, we use the ESP32 display.
+The project consists of two main components:
 
-## Features
-
-* Simple REST API
-* Supports any stop on the PTV network
-* Returns upcoming departures in a compact JSON format
-* Converts departure times into local Melbourne time
-* Provides:
-
-  * Destination
-  * Scheduled departure time
-  * Estimated departure time
-  * Minutes until departure
-  * Delay information
-  * Platform
-  * Route and trip identifiers
-
-## Example
-
-Request departures for Flinders Street Station Platform 1:
-
-```http
-GET /departures?stop_id=1071&platform=1
-```
-
-Response:
-
-```json
-{
-  "stop": {
-    "id": "au3:G1071-P1",
-    "name": "Flinders Street",
-    "platform": "1"
-  },
-  "departures": [
-    {
-      "dest": "Frankston",
-      "time": "15:04",
-      "delay": 120,
-      "remain": 6
-    },
-    {
-      "dest": "Mordialloc",
-      "time": "15:12",
-      "delay": null,
-      "remain": 14
-    },
-    {
-      "dest": "Cheltenham",
-      "time": "15:18",
-      "delay": 60,
-      "remain": 20
-    }
-  ]
-}
-```
-
-### Field Descriptions
-
-#### `stop`
-
-Information about the requested station platform.
-
-| Field      | Description                |
-| ---------- | -------------------------- |
-| `id`       | Unique platform identifier |
-| `name`     | Station name               |
-| `platform` | Platform number            |
-
-#### `departures`
-
-List of upcoming departures from the specified platform.
-
-| Field    | Type           | Description                                                       |
-| -------- | -------------- | ----------------------------------------------------------------- |
-| `dest`   | string         | Destination of the service                                        |
-| `time`   | string         | Departure time in Melbourne local time (`HH:MM`)                  |
-| `delay`  | integer | null | Delay in seconds. `null` if live delay information is unavailable |
-| `remain` | integer        | Minutes remaining until departure                                 |
+1. **Backend API** – fetches and simplifies transport data into a compact JSON format suitable for embedded devices.
+2. **ESP32 OLED Display** – connects to Wi-Fi, requests departure data from the API, and displays upcoming departures on a small OLED screen.
 
 
-## API Endpoint
-
-### Get Departures
-
-```http
-GET /departures
-```
-
-Query parameters:
-
-| Parameter | Description                    |
-| --------- | ------------------------------ |
-| stop_id   | PTV stop identifier            |
-| platform  | Platform number                |
-| limit     | Number of departures to return |
-
-Example:
-
-```http
-GET /departures?stop_id=1071&platform=1&limit=5
-```
-
-## Development
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Run locally:
-
-```bash
-uvicorn app:app --reload
-```
-
-Open:
+## System Architecture
 
 ```text
-http://localhost:8000/docs
+┌──────────────────────┐
+│ AnyTrip / PTV Data   │
+└──────────┬───────────┘
+           │ JSON
+           ▼
+┌──────────────────────┐
+│ Backend API          │
+│ (FastAPI / Vercel)   │
+└──────────┬───────────┘
+           │ JSON
+           ▼
+┌──────────────────────┐
+│ ESP32                │
+│ WiFi + HTTP Client   │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ SSD1306 OLED Display │
+└──────────────────────┘
 ```
 
-to access the automatically generated FastAPI documentation.
+---
 
-## Live Example
-```
-https://esp32-ptv-display-um8x.vercel.app/departures?stop_id=G1071&platform=P1&limit=3
+## Repository Structure
+
+```text
+.
+├── ptv-api/
+│   ├── README.md
+│   └── display.ino
+│
+├── esp32/
+│   ├── README.md
+│   └── app.py
+│
+└── README.md
 ```
 
+## Components
+
+### Backend API
+
+Located in:
+
+```text
+api/
+```
+
+The API is responsible for:
+
+* Retrieving public transport departure data
+* Normalising and simplifying responses
+* Converting timestamps into local Melbourne time
+* Returning compact JSON suitable for low-power devices
+* Reducing the amount of processing required on the ESP32
+
+See:
+
+```text
+api/README.md
+```
+
+for setup, deployment and API documentation.
+
+
+### ESP32 OLED Display
+
+Located in:
+
+```text
+esp32/
+```
+
+The ESP32 firmware is responsible for:
+
+* Connecting to Wi-Fi
+* Calling the backend API
+* Parsing JSON responses
+* Displaying departures on an SSD1306 OLED display
+* Refreshing data periodically
+
+See:
+
+```text
+esp32/README.md
+```
+
+for hardware setup, wiring diagrams, Arduino IDE installation and firmware instructions.
+
+
+## Data
+* Melbourne Public Transport Data
+* AnyTrip-derived departure feeds
+
+
+## Future Improvements
+
+* Multiple station support
+* Platform selection buttons
+* Historical departure statistics
+* Arrival predictions
+* Battery-powered portable unit
+* GTFS-Realtime integration
+* 3D printed enclosure
+
+---
